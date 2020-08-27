@@ -19,13 +19,13 @@ class Product extends Model implements HasMedia
      *
      * @return void
      */
-    protected static function boot()
-    {
-    	parent::boot();
-        static::creating(function($product) {
-        	$product->slug = Str::slug($product->title);
-        });
-    }
+    // protected static function boot()
+    // {
+    // 	parent::boot();
+    //     static::creating(function($product) {
+    //     	$product->slug = Str::slug($product->title);
+    //     });
+    // }
 
     public function category()
     {
