@@ -19,7 +19,7 @@ class ProductSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         foreach ($products as $product) {
-        	$product->addMediaFromUrl($faker->imageUrl)->toMediaCollection('images');
+        	$product->addMediaFromUrl($faker->imageUrl)->toMediaCollection('products');
         }
     }
 }
