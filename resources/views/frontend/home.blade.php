@@ -27,7 +27,7 @@
               </div>
               <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
               <img src="{{ $product->getFirstMediaUrl('products') }}" alt="{{ $product->title }}">
-              <a class="ps-shoe__overlay" href="product-detail.html"></a>
+              <a class="ps-shoe__overlay" href="{{ route('frontend.product.details', $product->slug) }}"></a>
             </div>
             <div class="ps-shoe__content">
               <div class="ps-shoe__variants">
@@ -46,7 +46,7 @@
                 </select>
               </div>
               <div class="ps-shoe__detail">
-                <a class="ps-shoe__name" href="#">{{ Str::limit($product->title, 20) }}</a>
+                <a class="ps-shoe__name" href="{{ route('frontend.product.details', $product->slug) }}">{{ Str::limit($product->title, 20) }}</a>
                 <p class="ps-shoe__categories">
                   <a href="#">Men shoes</a>,<a href="#"> Nike</a>,
                   <a href="#"> Jordan</a>
