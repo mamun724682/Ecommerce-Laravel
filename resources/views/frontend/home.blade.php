@@ -25,7 +25,13 @@
               <div class="ps-badge ps-badge--sale ps-badge--2nd">
                 <span>0%</span>
               </div>
-              <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
+              {{-- <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a> --}}
+              <form action="{{ route('cart.add') }}" method="post">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                  <button class="ps-shoe__favorite" type="submit"><i class="ps-icon-shopping-cart"></i></button>
+              </form>
+
               <img src="{{ $product->getFirstMediaUrl('products') }}" alt="{{ $product->title }}">
               <a class="ps-shoe__overlay" href="{{ route('frontend.product.details', $product->slug) }}"></a>
             </div>
@@ -52,7 +58,7 @@
                   <a href="#"> Jordan</a>
                 </p>
                 <span class="ps-shoe__price">
-                  <del>100{{ $product->sale_price }}</del> {{ $product->price }}৳</span>
+                  <del>{{ $product->sale_price }}</del> {{ $product->price }}৳</span>
                 </div>
               </div>
             </div>

@@ -47,6 +47,12 @@
   </div>
   <main class="ps-main">
 
+    @if(session()->has('success'))
+    <div class="alert alert-success">
+        {{ session()->get('success') }}
+    </div>
+@endif
+
     {{-- @include('frontend.partials._slider') --}}
 
     <div class="ps-section--features-product ps-section masonry-root pt-100 pb-100">
@@ -87,6 +93,7 @@
   <script type="text/javascript" src="{{ asset('frontend/js/main.js') }}"></script>
   <script type="text/javascript" src="{{ asset('frontend/plugins/revolution/js/extensions/revolution.extension.kenburn.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('frontend/plugins/revolution/js/extensions/revolution.extension.migration.min.js') }}"></script>
+
 
   @yield('scripts')
 

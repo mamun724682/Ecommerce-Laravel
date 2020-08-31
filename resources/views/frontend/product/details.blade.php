@@ -9,7 +9,7 @@
           <div class="ps-product__preview">
             <div class="ps-product__variants">
               @foreach ($product->getMedia('products') as $images)
-                <div class="item"><img src="{{ $images->getUrl() }}" alt=""></div>
+              <div class="item"><img src="{{ $images->getUrl() }}" alt=""></div>
               @endforeach
             </div>
             <a class="popup-youtube ps-product__video" href="http://www.youtube.com/watch?v=0O2aH4XLbto">
@@ -19,7 +19,7 @@
           <div class="ps-product__image">
             @foreach ($product->getMedia('products') as $images)
             <div class="item"><img class="zoom" src="{{ $images->getUrl() }}" alt="" data-zoom-image="{{ $images->getUrl() }}"></div>
-              @endforeach
+            @endforeach
           </div>
         </div>
         <div class="ps-product__thumbnail--mobile">
@@ -76,7 +76,14 @@
               <input class="form-control" type="number" value="1">
             </div>
           </div>
-          <div class="ps-product__shopping"><a class="ps-btn mb-10" href="cart.html">Add to cart<i class="ps-icon-next"></i></a>
+          <div class="ps-product__shopping">
+            {{-- <a class="ps-btn mb-10" href="cart.html">Add to cart<i class="ps-icon-next"></i></a> --}}
+            <form action="{{ route('cart.add') }}" method="post">
+              @csrf
+              <input type="hidden" name="product_id" value="{{ $product->id }}">
+              {{-- <button class="ps-btn mb-10" type="submit"><i class="ps-icon-shopping-cart"></i></button> --}}
+              <button class="ps-btn mb-10" type="submit">Add to cart<i class="ps-icon-next"></i></button>
+            </form>
             <div class="ps-product__actions"><a class="mr-10" href="whishlist.html"><i class="ps-icon-heart"></i></a><a href="compare.html"><i class="ps-icon-share"></i></a></div>
           </div>
         </div>

@@ -48,7 +48,7 @@
       </div>
       <div class="navigation__column center">
         <ul class="main-menu menu">
-          <li class="menu-item menu-item-has-children dropdown"><a href="index.html">Home</a>
+          <li class="menu-item menu-item-has-children dropdown"><a href="{{ route('frontend.home') }}">Home</a>
             <ul class="sub-menu">
               <li class="menu-item"><a href="index.html">Homepage #1</a></li>
               <li class="menu-item"><a href="#">Homepage #2</a></li>
@@ -202,31 +202,36 @@
           <input class="form-control" type="text" placeholder="Search Product…">
           <button><i class="ps-icon-search"></i></button>
         </form>
-        <div class="ps-cart"><a class="ps-cart__toggle" href="#"><span><i>20</i></span><i class="ps-icon-shopping-cart"></i></a>
+
+        <div class="ps-cart">
+          <a class="ps-cart__toggle" href="{{ route('cart.show') }}">
+          <span><i>{{ session()->has('cart') ? count(session('cart')) : 0 }}</i></span><i class="ps-icon-shopping-cart"></i></a>
           <div class="ps-cart__listing">
             <div class="ps-cart__content">
-              <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
-                <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="images/cart-preview/1.jpg" alt=""></div>
-                <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">Amazin’ Glazin’</a>
-                  <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
+              @php
+                $cart = session()->get('cart') ?? [];
+              @endphp
+              @forelse ($cart as $product)
+                <div class="ps-cart-item">
+                <a class="ps-cart-item__close" href="#"></a>
+                <div class="ps-cart-item__thumbnail">
+                  <a href="{{ route('frontend.product.details', $product['product_slug']) }}"></a>
+                  <img src="{{ $product['image'] }}" alt="">
+                </div>
+                <div class="ps-cart-item__content">
+                  <a class="ps-cart-item__title" href="{{ route('frontend.product.details', $product['product_slug']) }}">{{ $product['title'] }}</a>
+                  <p><span>Quantity:<i>{{ $product['quantity'] }}</i></span><span>Total:<i>৳{{ $product['total_price'] }}</i></span></p>
                 </div>
               </div>
-              <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
-                <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="images/cart-preview/2.jpg" alt=""></div>
-                <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">The Crusty Croissant</a>
-                  <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
+              @empty
+                <div class="ps-cart-item__content">
+                  Please add products to cart!
                 </div>
-              </div>
-              <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
-                <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="images/cart-preview/3.jpg" alt=""></div>
-                <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">The Rolling Pin</a>
-                  <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
-                </div>
-              </div>
+              @endforelse
             </div>
             <div class="ps-cart__total">
-              <p>Number of items:<span>36</span></p>
-              <p>Item Total:<span>£528.00</span></p>
+              <p>Number of items:<span>{{ count($cart) }}</span></p>
+              <p>Item Total:<span>৳ {{ number_format(array_sum(array_column($cart, 'total_price')), 2) }}</span></p>
             </div>
             <div class="ps-cart__footer"><a class="ps-btn" href="cart.html">Check out<i class="ps-icon-arrow-left"></i></a></div>
           </div>
