@@ -21,4 +21,9 @@ Route::group(['namespace' => 'Frontend'], function() {
     Route::get('cart', 'CartController@showCart')->name('cart.show');
     Route::post('cart/remove', 'CartController@removeFromCart')->name('cart.remove');
     Route::get('cart/clear', 'CartController@clearCart')->name('cart.clear');
+
+    Route::get('checkout', 'CartController@checkout')->name('checkout');
+
+    // Route::get('login', 'AuthController@showLoginPage')->name('login');
+    // Route::post('login', 'AuthController@processLogin')->name('login');
 });

@@ -61,7 +61,7 @@
 		</div>
 		<div class="ps-cart__total">
 			<h3>Total Price: <span> {{ number_format($total, 2) }} ৳</span></h3>
-				<a class="ps-btn" href="checkout.html">Process to checkout<i class="ps-icon-next"></i></a><br><br>
+				<a class="ps-btn" href="{{ route('checkout') }}">Process to checkout<i class="ps-icon-next"></i></a><br><br>
 			<a class="ps-btn ps-btn--gray" href="{{ route('cart.clear') }}">Clear Cart</a>
 		</div>
 	</div>

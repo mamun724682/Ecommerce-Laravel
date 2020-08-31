@@ -233,7 +233,7 @@
               <p>Number of items:<span>{{ count($cart) }}</span></p>
               <p>Item Total:<span>৳ {{ number_format(array_sum(array_column($cart, 'total_price')), 2) }}</span></p>
             </div>
-            <div class="ps-cart__footer"><a class="ps-btn" href="cart.html">Check out<i class="ps-icon-arrow-left"></i></a></div>
+            <div class="ps-cart__footer"><a class="ps-btn" href="{{ route('checkout') }}">Check out<i class="ps-icon-arrow-left"></i></a></div>
           </div>
         </div>
         <div class="menu-toggle"><span></span></div>

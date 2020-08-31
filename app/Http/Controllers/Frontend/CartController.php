@@ -45,7 +45,6 @@ class CartController extends Controller
 
     public function showCart()
     {
-    	// session()->flush();
     	$cart = session()->has('cart') ? session()->get('cart') : [];
     	$total = array_sum(array_column($cart, 'total_price'));
     	return view('frontend.cart', compact('cart', 'total'));
@@ -61,7 +60,6 @@ class CartController extends Controller
     		return redirect()->back();
     	}
 
-    	// $product = Product::findOrFail(request()->product_id);
     	$cart = session()->has('cart') ? session()->get('cart') : [];
     	unset($cart[request()->product_id]);
     	session(['cart' => $cart]);
@@ -73,5 +71,10 @@ class CartController extends Controller
     {
     	session(['cart' => []]);
     	return redirect()->back();
+    }
+
+    public function checkout()
+    {
+    	return view('frontend.checkout');
     }
 }
