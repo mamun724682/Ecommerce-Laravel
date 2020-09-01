@@ -28,4 +28,6 @@ Route::group(['namespace' => 'Frontend'], function() {
     Route::post('login', 'AuthController@processLogin')->name('login');
     Route::get('register', 'AuthController@showRegisterForm')->name('register');
     Route::post('register', 'AuthController@processRegister')->name('register');
+
+    Route::get('activate/{token}', 'AuthController@activate')->name('activate');
 });
