@@ -52,16 +52,6 @@ class AuthController extends Controller
 		}
 	}
 
-	public function showLoginForm()
-	{
-		return view('frontend.auth.login');
-	}
-
-	public function processLogin()
-	{
-
-	}
-
 	public function activate($token = null)
 	{
 		if ($token == null) {
@@ -84,5 +74,40 @@ class AuthController extends Controller
 		$this->errorMessage('Invalid Token');
 
 		return redirect()->route('login');
+	}
+
+	public function showLoginForm()
+	{
+		return view('frontend.auth.login');
+	}
+
+	public function processLogin()
+	{
+		request()->validate([
+			'email' =>'required|email',
+			'password' => 'required|min:5'
+		]);
+
+		$credentials = request()->only(['email', 'password']);
+
+		if (auth()->attempt($credentials)) {
+			if (auth()->user()->email_verified_at == null) {
+				$this->errorMessage('Please activate your account!');
+				return redirect()->route('login');
+			}
+
+			$this->successMessage('Success');
+			return redirect('/');
+		}
+
+		$this->errorMessage('Invalid credentials!');
+		return redirect()->route('login');
+	}
+
+	public function logout()
+	{
+		auth()->logout();
+
+		return redirect('/');
 	}
 }

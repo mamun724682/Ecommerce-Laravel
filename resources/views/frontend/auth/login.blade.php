@@ -1,57 +1,42 @@
 @extends('frontend.layouts.master')
 
 @section('content')
-<form class="ps-checkout__form" action="do_action" method="post">
+<form class="ps-checkout__form" action="{{ route('login') }}" method="post">
+	@csrf
+	
 	<div class="ps-checkout__billing">
-		<h3>Billing Detail</h3>
+		<h1 class="text-center"><u>Login</u></h1> <br><br>
 		<div class="form-group form-group--inline">
-			<label>First Name<span>*</span>
+			<label for="email">Email Address<span style="color: red;">*</span>
 			</label>
-			<input class="form-control" type="text">
+			<input name="email" class="form-control @error('email') is-invalid @enderror" type="email" value="{{ old('email') }}" required>
+
+			@error('email')
+			<span class="invalid-feedback" role="alert" style="color: red;">
+				<strong>{{ $message }}</strong>
+			</span>
+			@enderror
 		</div>
 		<div class="form-group form-group--inline">
-			<label>Last Name<span>*</span>
+			<label for="password">Password<span style="color: red;">*</span>
 			</label>
-			<input class="form-control" type="text">
+			<input name="password" class="form-control @error('password') is-invalid @enderror" type="password" value="{{ old('password') }}" required>
+
+			@error('password')
+			<span class="invalid-feedback" role="alert" style="color: red;">
+				<strong>{{ $message }}</strong>
+			</span>
+			@enderror
 		</div>
-		<div class="form-group form-group--inline">
-			<label>Company Name<span>*</span>
-			</label>
-			<input class="form-control" type="text">
-		</div>
-		<div class="form-group form-group--inline">
-			<label>Email Address<span>*</span>
-			</label>
-			<input class="form-control" type="email">
-		</div>
-		<div class="form-group form-group--inline">
-			<label>Company Name<span>*</span>
-			</label>
-			<input class="form-control" type="text">
-		</div>
-		<div class="form-group form-group--inline">
-			<label>Phone<span>*</span>
-			</label>
-			<input class="form-control" type="text">
-		</div>
-		<div class="form-group form-group--inline">
-			<label>Address<span>*</span>
-			</label>
-			<input class="form-control" type="text">
-		</div>
+	</div>
+	<hr>
+	<div class="text-center">
 		<div class="form-group">
 			<div class="ps-checkbox">
 				<input class="form-control" type="checkbox" id="cb01">
-				<label for="cb01">Create an account?</label>
+				<label for="cb01">Remembe me</label>
 			</div>
 		</div>
-		<h3 class="mt-40"> Addition information</h3>
-		<div class="form-group form-group--inline textarea">
-			<label>Order Notes</label>
-			<textarea class="form-control" rows="5" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-		</div>
-	</div>
-	<div class="text-center">
 		<button class="ps-btn">Register<i class="ps-icon-next"></i></button>
 	</div>
 </form>

@@ -24,10 +24,16 @@ Route::group(['namespace' => 'Frontend'], function() {
 
     Route::get('checkout', 'CartController@checkout')->name('checkout');
 
-    Route::get('login', 'AuthController@showLoginForm')->name('login');
+    Route::get('login', 'AuthController@showLoginForm')->name('login')->middleware('guest');
     Route::post('login', 'AuthController@processLogin')->name('login');
-    Route::get('register', 'AuthController@showRegisterForm')->name('register');
+    Route::get('register', 'AuthController@showRegisterForm')->name('register')->middleware('guest');
     Route::post('register', 'AuthController@processRegister')->name('register');
 
     Route::get('activate/{token}', 'AuthController@activate')->name('activate');
+
+    Route::group(['middleware' => 'auth'], function()
+    {
+    	Route::get('logout', 'AuthController@logout')->name('logout');
+    	Route::get('profile', 'AuthController@profile')->name('profile');
+    });
 });

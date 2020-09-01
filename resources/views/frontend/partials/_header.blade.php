@@ -13,8 +13,8 @@
             <a href="{{ route('register') }}">Register</a>
             @endguest
             @auth
-            <a href="#">My Profile</a>
-            <a href="#">Logout</a>
+            <a href="{{ route('profile') }}">My Profile</a>
+            <a href="{{ route('logout') }}">Logout</a>
             @endauth
 
             <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">USD<i class="fa fa-angle-down"></i></a>
