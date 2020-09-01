@@ -24,6 +24,8 @@ Route::group(['namespace' => 'Frontend'], function() {
 
     Route::get('checkout', 'CartController@checkout')->name('checkout');
 
-    // Route::get('login', 'AuthController@showLoginPage')->name('login');
-    // Route::post('login', 'AuthController@processLogin')->name('login');
+    Route::get('login', 'AuthController@showLoginForm')->name('login');
+    Route::post('login', 'AuthController@processLogin')->name('login');
+    Route::get('register', 'AuthController@showRegisterForm')->name('register');
+    Route::post('register', 'AuthController@processRegister')->name('register');
 });

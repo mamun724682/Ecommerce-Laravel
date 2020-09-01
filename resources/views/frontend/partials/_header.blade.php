@@ -9,8 +9,8 @@
           <div class="header__actions">
 
             @guest
-            <a href="#">Login</a>
-            <a href="#">Regiser</a>
+            <a href="{{ route('login') }}">Login</a>
+            <a href="{{ route('register') }}">Register</a>
             @endguest
             @auth
             <a href="#">My Profile</a>

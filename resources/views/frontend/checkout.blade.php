@@ -6,7 +6,7 @@
 		@guest
 		<div class="ps-shipping">
 			<h3>FREE SHIPPING</h3>
-			<p>YOUR ORDER QUALIFIES FOR FREE SHIPPING.<br> Please <a href="#"> Login</a> or <a href="#"> Singup</a> for free shipping on every order, every time.</p>
+			<p>YOUR ORDER QUALIFIES FOR FREE SHIPPING.<br> Please <a href="{{ route('login') }}"> Login</a> or <a href="{{ route('register') }}"> Singup</a> for free shipping on every order, every time.</p>
 		</div>
 		@endguest
 
