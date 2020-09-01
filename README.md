@@ -7,6 +7,7 @@ Ecommerce Laravel is an open source ecommerce platform management system using L
 - Laravel Debugbar(dev)
 - Laravel IDE Helper for PhpStorm(dev)
 - Laravel Medialibrary
+- Predis
 
 ## Installation Instruction
 
