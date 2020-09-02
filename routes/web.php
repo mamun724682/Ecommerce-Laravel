@@ -34,8 +34,10 @@ Route::group(['namespace' => 'Frontend'], function() {
     Route::group(['middleware' => 'auth'], function()
     {
     	Route::get('logout', 'AuthController@logout')->name('logout');
+
     	Route::get('profile', 'AuthController@profile')->name('profile');
 
     	Route::post('order', 'CartController@processOrder')->name('order');
+    	Route::get('order/{id}', 'CartController@showOrder')->name('order.details');
     });
 });

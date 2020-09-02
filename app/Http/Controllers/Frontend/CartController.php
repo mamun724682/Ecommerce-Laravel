@@ -90,7 +90,6 @@ class CartController extends Controller
 
     public function processOrder()
     {
-        // dd(request()->all());
         request()->validate([
             'customer_name' => 'required',
             'customer_phone_number' => 'required',
@@ -122,10 +121,17 @@ class CartController extends Controller
             ]);
         }
 
-        session(['cart' => []]);
+        session()->forget(['cart', 'total']);
 
         $notification = $this->toastr('success', 'Order Created!');
 
         return redirect('/')->with($notification);
+    }
+
+    public function showOrder($id)
+    {
+        $order = Order::with(['products','products.product'])->where('user_id', auth()->user()->id)->findOrFail($id);
+
+        return view('frontend.orderDetails', compact('order'));
     }
 }

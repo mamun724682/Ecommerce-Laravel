@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\User;
 use Carbon\Carbon;
+use App\Model\Order;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -109,5 +110,12 @@ class AuthController extends Controller
 		auth()->logout();
 
 		return redirect('/');
+	}
+
+	public function profile()
+	{
+		$orders = Order::with(['customer'])->where('user_id', auth()->user()->id)->get();
+		
+		return view('frontend.auth.profile', compact('orders'));
 	}
 }
