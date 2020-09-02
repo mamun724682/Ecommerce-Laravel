@@ -11,56 +11,73 @@
 		@endguest
 
 		@auth
-		<form class="ps-checkout__form" action="do_action" method="post">
+		<form class="ps-checkout__form" action="{{ route('order') }}" method="post">
+			@csrf
+			
 			<div class="row">
 				<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+
+					<div class="ps-shipping text-center">
+						<h2 style="color: #2AC37D">You are ordering as, {{ auth()->user()->name }}</h2>
+					</div>
+
 					<div class="ps-checkout__billing">
 						<h3>Billing Detail</h3>
 						<div class="form-group form-group--inline">
-							<label>First Name<span>*</span>
+							<label for="name">Customer Name<span style="color: red;">*</span>
 							</label>
-							<input class="form-control" type="text">
+							<input name="customer_name" class="form-control @error('customer_name') is-invalid @enderror" type="text" value="{{ auth()->user()->name }}" required>
+
+							@error('customer_name')
+							<span class="invalid-feedback" role="alert" style="color: red;">
+								<strong>{{ $message }}</strong>
+							</span>
+							@enderror
 						</div>
 						<div class="form-group form-group--inline">
-							<label>Last Name<span>*</span>
+							<label for="customer_phone_number">Phone Number<span style="color: red;">*</span>
 							</label>
-							<input class="form-control" type="text">
+							<input name="customer_phone_number" class="form-control @error('customer_phone_number') is-invalid @enderror" type="text" value="{{ auth()->user()->phone_number }}" required>
+
+							@error('customer_phone_number')
+							<span class="invalid-feedback" role="alert" style="color: red;">
+								<strong>{{ $message }}</strong>
+							</span>
+							@enderror
 						</div>
 						<div class="form-group form-group--inline">
-							<label>Company Name<span>*</span>
+							<label for="address">Address<span style="color: red;">*</span>
 							</label>
-							<input class="form-control" type="text">
+							{{-- <input name="address" class="form-control @error('address') is-invalid @enderror" type="text" value="{{ old('address') }}" required> --}}
+							<textarea name="address" class="form-control" rows="3" placeholder="Please input your details address." required>{{ old('address') }}</textarea>
+
+							@error('address')
+							<span class="invalid-feedback" role="alert" style="color: red;">
+								<strong>{{ $message }}</strong>
+							</span>
+							@enderror
 						</div>
 						<div class="form-group form-group--inline">
-							<label>Email Address<span>*</span>
+							<label for="city">City<span style="color: red;">*</span>
 							</label>
-							<input class="form-control" type="email">
+							<input name="city" class="form-control @error('city') is-invalid @enderror" type="text" value="{{ old('city') }}" required>
+
+							@error('city')
+							<span class="invalid-feedback" role="alert" style="color: red;">
+								<strong>{{ $message }}</strong>
+							</span>
+							@enderror
 						</div>
 						<div class="form-group form-group--inline">
-							<label>Company Name<span>*</span>
+							<label for="postal_code">Postal Code<span style="color: red;">*</span>
 							</label>
-							<input class="form-control" type="text">
-						</div>
-						<div class="form-group form-group--inline">
-							<label>Phone<span>*</span>
-							</label>
-							<input class="form-control" type="text">
-						</div>
-						<div class="form-group form-group--inline">
-							<label>Address<span>*</span>
-							</label>
-							<input class="form-control" type="text">
-						</div>
-						<div class="form-group">
-							<div class="ps-checkbox">
-								<input class="form-control" type="checkbox" id="cb01">
-								<label for="cb01">Create an account?</label>
-							</div>
-						</div>
-						<h3 class="mt-40"> Addition information</h3>
-						<div class="form-group form-group--inline textarea">
-							<label>Order Notes</label>
-							<textarea class="form-control" rows="5" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+							<input name="postal_code" class="form-control @error('postal_code') is-invalid @enderror" type="text" value="{{ old('postal_code') }}" required>
+
+							@error('postal_code')
+							<span class="invalid-feedback" role="alert" style="color: red;">
+								<strong>{{ $message }}</strong>
+							</span>
+							@enderror
 						</div>
 					</div>
 				</div>
@@ -78,17 +95,15 @@
 									</tr>
 								</thead>
 								<tbody>
+									@foreach ($cart as $key=> $product)
 									<tr>
-										<td>HABITANT x1</td>
-										<td>$300.00</td>
+										<td>{{ $product['title'] }} x{{ $product['quantity'] }}</td>
+										<td>{{ number_format($product['total_price'], 2) }}৳</td>
 									</tr>
+									@endforeach
 									<tr>
-										<td>Card Subtitle</td>
-										<td>$300.00</td>
-									</tr>
-									<tr>
-										<td>Order Total</td>
-										<td>$300.00</td>
+										<td><strong style="color: #2AC37D">Total</strong></td>
+										<td  style="color: #2AC37D">{{ number_format($total, 2) }}৳</td>
 									</tr>
 								</tbody>
 							</table>
@@ -108,11 +123,11 @@
 									<label for="rdo02">Paypal</label>
 								</div>
 								<ul class="ps-payment-method">
-									<li><a href="#"><img src="images/payment/1.png" alt=""></a></li>
-									<li><a href="#"><img src="images/payment/2.png" alt=""></a></li>
-									<li><a href="#"><img src="images/payment/3.png" alt=""></a></li>
+									<li><a href="#"><img src="frontend/images/payment/1.png" alt=""></a></li>
+									<li><a href="#"><img src="frontend/images/payment/2.png" alt=""></a></li>
+									<li><a href="#"><img src="frontend/images/payment/3.png" alt=""></a></li>
 								</ul>
-								<button class="ps-btn ps-btn--fullwidth">Place Order<i class="ps-icon-next"></i></button>
+								<button type="submit" class="ps-btn ps-btn--fullwidth">Place Order<i class="ps-icon-next"></i></button>
 							</div>
 						</footer>
 					</div>					

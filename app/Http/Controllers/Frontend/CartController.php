@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Model\Order;
 use App\Model\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -38,15 +39,16 @@ class CartController extends Controller
     	}
 
     	session(['cart' => $cart]);
-    	session()->flash('success', $product->title." added to cart.");
+        $notification = $this->toastr('success', $product->title." added to cart.");
 
-    	return redirect()->back();
+    	return redirect()->back()->with($notification);
     }
 
     public function showCart()
     {
     	$cart = session()->has('cart') ? session()->get('cart') : [];
     	$total = array_sum(array_column($cart, 'total_price'));
+
     	return view('frontend.cart', compact('cart', 'total'));
     }
 
@@ -75,6 +77,55 @@ class CartController extends Controller
 
     public function checkout()
     {
-    	return view('frontend.checkout');
+        $cart = session()->has('cart') ? session()->get('cart') : [];
+        $total = array_sum(array_column($cart, 'total_price'));
+
+        if (count($cart) <= 0) {
+            $notification = $this->toastr('warning', 'Please add products to cart!');
+            return redirect('/')->with($notification);
+        }
+
+        return view('frontend.checkout', compact('cart', 'total'));
+    }
+
+    public function processOrder()
+    {
+        // dd(request()->all());
+        request()->validate([
+            'customer_name' => 'required',
+            'customer_phone_number' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'postal_code' => 'required',
+        ]);
+
+        $cart = session()->has('cart') ? session()->get('cart') : [];
+        $total = array_sum(array_column($cart, 'total_price'));
+
+        $order = Order::create([
+            'user_id' => auth()->user()->id,
+            'customer_name' => request()->customer_name,
+            'customer_phone_number' => request()->customer_phone_number,
+            'address' => request()->address,
+            'city' => request()->city,
+            'postal_code' => request()->postal_code,
+            'total_amount' => $total,
+            'paid_amount' => $total,
+            'payment_details' => 'Cash on Delivery',
+        ]);
+
+        foreach ($cart as $product_id => $product) {
+            $order->products()->create([
+                'product_id' => $product_id,
+                'quantity' => $product['quantity'],
+                'price' => $product['total_price'],
+            ]);
+        }
+
+        session(['cart' => []]);
+
+        $notification = $this->toastr('success', 'Order Created!');
+
+        return redirect('/')->with($notification);
     }
 }

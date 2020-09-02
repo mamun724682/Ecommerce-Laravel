@@ -9,15 +9,23 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected function successMessage($message)
-    {
-    	session()->flash('success', $message);
-    }
+	protected function successMessage($message)
+	{
+		session()->flash('success', $message);
+	}
 
-    protected function errorMessage($message)
-    {
-    	session()->flash('error', $message);
-    }
+	protected function errorMessage($message)
+	{
+		session()->flash('error', $message);
+	}
+
+	protected function toastr($type, $message)
+	{
+		return array(
+			'message' => $message,
+			'alert-type' => $type
+		);
+	}
 }

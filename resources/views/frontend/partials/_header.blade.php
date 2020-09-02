@@ -211,15 +211,19 @@
               @php
                 $cart = session()->get('cart') ?? [];
               @endphp
-              @forelse ($cart as $product)
+              @forelse ($cart as $product_id => $product)
                 <div class="ps-cart-item">
-                <a class="ps-cart-item__close" href="#"></a>
+                <form action="{{ route('cart.remove') }}" method="post">
+                  @csrf
+                  <input type="hidden" name="product_id" value="{{ $product_id }}">
+                  <button class="ps-cart-item__close" type="submit"></button>
+                </form>
                 <div class="ps-cart-item__thumbnail">
                   <a href="{{ route('frontend.product.details', $product['product_slug']) }}"></a>
                   <img src="{{ $product['image'] }}" alt="">
                 </div>
                 <div class="ps-cart-item__content">
-                  <a class="ps-cart-item__title" href="{{ route('frontend.product.details', $product['product_slug']) }}">{{ $product['title'] }}</a>
+                  <a class="ps-cart-item__title" href="{{ route('frontend.product.details', $product['product_slug']) }}">{{ Str::limit($product['title'], 20) }}</a>
                   <p><span>Quantity:<i>{{ $product['quantity'] }}</i></span><span>Total:<i>৳{{ $product['total_price'] }}</i></span></p>
                 </div>
               </div>
@@ -233,7 +237,11 @@
               <p>Number of items:<span>{{ count($cart) }}</span></p>
               <p>Item Total:<span>৳ {{ number_format(array_sum(array_column($cart, 'total_price')), 2) }}</span></p>
             </div>
-            <div class="ps-cart__footer"><a class="ps-btn" href="{{ route('checkout') }}">Check out<i class="ps-icon-arrow-left"></i></a></div>
+            @if (count($cart) > 0)
+              <div class="ps-cart__footer">
+              <a class="ps-btn" href="{{ route('checkout') }}">Check out<i class="ps-icon-arrow-left"></i></a>
+            </div>
+            @endif
           </div>
         </div>
         <div class="menu-toggle"><span></span></div>

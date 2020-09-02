@@ -8,7 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $gurded = [];
+    protected $fillable = [
+            'user_id',
+            'customer_name',
+            'customer_phone_number',
+            'address',
+            'city',
+            'postal_code',
+            'total_amount',
+            'paid_amount',
+            'payment_details',
+        ];
 
     public function customer()
     {
