@@ -125,7 +125,7 @@ class CartController extends Controller
 
         $notification = $this->toastr('success', 'Order Created!');
 
-        return redirect('/')->with($notification);
+        return redirect()->route('order.details', $order->id)->with($notification);
     }
 
     public function showOrder($id)

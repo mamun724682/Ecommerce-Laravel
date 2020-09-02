@@ -16,7 +16,7 @@
 		<tbody>
 			@forelse ($orders as $order)
 			<tr>
-				<td><a class="ps-product__preview" href="{{ route('order.details', $order->id) }}"><img class="mr-15" src="images/product/cart-preview/1.jpg" alt=""> {{ $order->customer->name }}</a></td>
+				<td><a class="ps-product__preview" href="{{ route('order.details', $order->id) }}"><img class="mr-15" src="images/product/cart-preview/1.jpg" alt=""> {{ $order->customer_name }}</a></td>
 				<td>{{ $order->customer_phone_number }}</td>
 				<td>{{ $order->total_amount }}</td>
 				<td>{{ $order->paid_amount }}</td>

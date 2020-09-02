@@ -12,10 +12,10 @@
 						<td>Customer Name</td>
 						<td>{{ $order->customer_name }}</td>
 					</tr>
-					@if ($order->prcessed_by)
+					@if ($order->processed_by)
 					<tr>
 						<td>Processed By</td>
-						<td>{{ $order->processed_by }}</td>
+						<td>{{ $order->customer->name }}</td>
 					</tr>
 					@endif
 					<tr>
