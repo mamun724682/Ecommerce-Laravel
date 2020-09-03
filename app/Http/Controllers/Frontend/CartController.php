@@ -6,6 +6,7 @@ use App\Model\Order;
 use App\Model\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\OrderEmailNotification;
 
 class CartController extends Controller
 {
@@ -120,6 +121,8 @@ class CartController extends Controller
                 'price' => $product['total_price'],
             ]);
         }
+
+        auth()->user()->notify(new OrderEmailNotification($order));
 
         session()->forget(['cart', 'total']);
 
